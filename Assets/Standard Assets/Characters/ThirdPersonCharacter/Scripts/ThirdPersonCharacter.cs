@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
@@ -29,6 +30,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
 
+        private int count;
+        public Text countText;
+
 
 		void Start()
 		{
@@ -40,7 +44,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
-		}
+
+            count = 0;
+            setCountText();
+
+        }
 
 
 		public void Move(Vector3 move, bool crouch, bool jump)
@@ -221,5 +229,21 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_Animator.applyRootMotion = false;
 			}
 		}
-	}
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("PickUp"))
+            {
+                count++;
+                setCountText();
+                other.gameObject.SetActive(false);
+            }
+        
+        }
+
+        private void setCountText()
+        {
+            countText.text = "Count: " + count.ToString();
+        }
+    }
 }
