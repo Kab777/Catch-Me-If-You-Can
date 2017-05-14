@@ -31,6 +31,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson {
         // Use this for initialization
         void Start() {
             agent = GetComponent<NavMeshAgent>();
+            agent.baseOffset = 0;
+            agent.height = 2f;
             character = GetComponent<ThirdPersonCharacter>();
 
             agent.updatePosition = true;
@@ -71,24 +73,30 @@ namespace UnityStandardAssets.Characters.ThirdPerson {
                 wayPointIndex = Random.Range(0, wayPoints.Length);
             } else {
                 // ideal animation
-                character.Move(Vector3.zero, false, false);
+                //character.Move(Vector3.zero, false, false);
             }
         }
 
         void Chase() {
+            /*if (Vector3.Distance(this.transform.position, target.transform.position) < 2) {
+                // got u!
+                GUI.Label(new Rect(Screen.width / 2, Screen.height / 2, 200f, 200f), "You Lost" );
+            }*/
+
             agent.speed = chaseSpeed;
             agent.SetDestination(target.transform.position);
             character.Move(agent.desiredVelocity, false, false);
         }
 
         private void OnTriggerEnter(Collider other) {
-           
+
             if (other.gameObject.CompareTag("Player")) {
-               
+
                 state = State.CHASE;
                 target = other.gameObject;
             }
         }
+
 
 
     }
