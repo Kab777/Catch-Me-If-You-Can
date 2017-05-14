@@ -47,7 +47,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson {
         IEnumerator FSM() {
 
             while (alive) {
-       
                 switch (state) {
                     case State.PATROL:
                         Patrol();
@@ -67,11 +66,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson {
                 agent.SetDestination(wayPoints[wayPointIndex].transform.position);
                 character.Move(agent.desiredVelocity, false, false);
             } else if (Vector3.Distance(this.transform.position, wayPoints[wayPointIndex].transform.position) < 2) {
-                if (wayPointIndex > wayPoints.Length) {
+                wayPointIndex++;
+                if (wayPointIndex >= wayPoints.Length) {
                     wayPointIndex = 0;
                 }
-                wayPointIndex += 1;
-                
             } else {
                 // ideal animation
                 character.Move(Vector3.zero, false, false);
@@ -85,7 +83,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson {
         }
 
         private void OnTriggerEnter(Collider other) {
-            Debug.Log(other.tag);
+           
             if (other.gameObject.CompareTag("Player")) {
                
                 state = State.CHASE;
