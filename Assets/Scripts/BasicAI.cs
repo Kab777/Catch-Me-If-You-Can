@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using UnityEngine.AI;
 
 namespace UnityStandardAssets.Characters.ThirdPerson {
@@ -21,7 +20,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson {
 
         // Variable for patrolling
         public GameObject[] wayPoints;
-        private int wayPointIndex = 0;
+        private int wayPointIndex;
         public float patrolSpeed = 0.5f;
 
         // Variable for Chasing
@@ -36,6 +35,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson {
 
             agent.updatePosition = true;
             agent.updateRotation = false;
+
+            wayPoints = GameObject.FindGameObjectsWithTag("WayPoint");
+            wayPointIndex = Random.Range(0, wayPoints.Length);
 
             state = State.PATROL;
             alive = true;
@@ -66,10 +68,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson {
                 agent.SetDestination(wayPoints[wayPointIndex].transform.position);
                 character.Move(agent.desiredVelocity, false, false);
             } else if (Vector3.Distance(this.transform.position, wayPoints[wayPointIndex].transform.position) < 2) {
-                wayPointIndex++;
-                if (wayPointIndex >= wayPoints.Length) {
-                    wayPointIndex = 0;
-                }
+                wayPointIndex = Random.Range(0, wayPoints.Length);
             } else {
                 // ideal animation
                 character.Move(Vector3.zero, false, false);

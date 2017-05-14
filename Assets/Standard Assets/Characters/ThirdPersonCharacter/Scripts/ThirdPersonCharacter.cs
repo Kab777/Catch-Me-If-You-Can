@@ -218,7 +218,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson {
         }
 
         private void setCountText() {
-           // countText.text = "Count: " + count.ToString();
+            countText.text = count.ToString();
         }
     }
 }
