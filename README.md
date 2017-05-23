@@ -1,8 +1,8 @@
 # Catch me if you can
 
-Unity AI chasing game built with NavMesh Agent
+Unity AI chasing action game built with NavMesh Agent
 
-Try to get as many capsules as you can before you get caught!
+Try to get as many capsules as you can before you get caught by smart Ethan!
 
 ![](Demo/demo.gif)
 
